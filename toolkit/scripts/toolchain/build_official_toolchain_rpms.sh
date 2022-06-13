@@ -72,8 +72,8 @@ touch $TOOLCHAIN_FAILURES
 # If we're incrementally building and there are RPMs available to rehydrate from the repo, copy to the proper chroot RPM folder.
 # Empty files are indicative of a failure to download or a disabling of repo rehydration, so filter out empty RPMs.
 if [ "$INCREMENTAL_TOOLCHAIN" = "y" ]; then
-find $MARINER_REHYDRATED_RPMS_DIR -name "*.$(uname -m).rpm$" -size +0 -exec cp {} $CHROOT_RPMS_DIR_ARCH ';'
-find $MARINER_REHYDRATED_RPMS_DIR -name "*.noarch.rpm$" -size +0 -exec cp {} $CHROOT_RPMS_DIR_NOARCH ';'
+find $MARINER_REHYDRATED_RPMS_DIR -name "*.$(uname -m).rpm" -size +0 -exec cp {} $CHROOT_RPMS_DIR_ARCH ';'
+find $MARINER_REHYDRATED_RPMS_DIR -name "*.noarch.rpm" -size +0 -exec cp {} $CHROOT_RPMS_DIR_NOARCH ';'
 fi
 
 chroot_mount () {
