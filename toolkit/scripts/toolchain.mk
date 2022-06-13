@@ -222,8 +222,6 @@ endif
 # If there is an archive selected (build from scratch or provided via TOOLCHAIN_ARCHIVE), extract the RPMs from it.
 ifneq (,$(selected_toolchain_archive))
 # Our manifest files should always track the contents of the freshly built archives exactly
-#   Currently non-blocking, to make this a blocking check switch to `print_error` instead of
-#   `print_warning`
 $(STATUS_FLAGS_DIR)/toolchain_verify.flag: $(TOOLCHAIN_MANIFEST) $(selected_toolchain_archive)
 	@echo Validating contents of toolchain against manifest...
 	tar -I $(ARCHIVE_TOOL) -tf $(selected_toolchain_archive) | grep -oP "[^/]+rpm$$" | sort > $(toolchain_actual_contents) && \
