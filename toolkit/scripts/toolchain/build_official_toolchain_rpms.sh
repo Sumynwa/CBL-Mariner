@@ -171,7 +171,7 @@ chroot_and_run_rpmbuild () {
 }
 
 build_rpm_in_chroot_no_install () {
-    # $1 = package name
+    # $1 = SRPM name
     # $2 = qualified package name
     if [ -n "$2" ]; then
         rpmPath=$(find $CHROOT_RPMS_DIR -name "$2-*" -print -quit)
@@ -422,8 +422,8 @@ build_rpm_in_chroot_no_install meson
 # gtk-doc needs itstool, meson, python3-pygments
 chroot_and_install_rpms itstool
 chroot_and_install_rpms meson
-build_rpm_in_chroot_no_install python-pygments
-chroot_and_install_rpms python-pygments
+build_rpm_in_chroot_no_install python-pygments python3-pygments
+chroot_and_install_rpms python3-pygments
 
 # gtk-doc and ca-certificates require libxslt
 chroot_and_install_rpms docbook-dtd-xml
@@ -435,7 +435,7 @@ build_rpm_in_chroot_no_install gtk-doc
 # python3-lxml requires python3-Cython and libxslt
 build_rpm_in_chroot_no_install Cython
 chroot_and_install_rpms python3-Cython
-build_rpm_in_chroot_no_install python-lxml
+build_rpm_in_chroot_no_install python-lxml python3-lxml
 chroot_and_install_rpms python3-lxml
 
 # p11-kit, libtasn1 and glib need gtk-doc
@@ -506,10 +506,10 @@ build_rpm_in_chroot_no_install rpm
 
 # python-jinja2 needs python3-markupsafe
 # python3-setuptools, python3-xml are also needed but already installed
-build_rpm_in_chroot_no_install python-markupsafe
+build_rpm_in_chroot_no_install python-markupsafe python3-markupsafe
 copy_rpm_subpackage python3-markupsafe
 chroot_and_install_rpms python3-markupsafe
-build_rpm_in_chroot_no_install python-jinja2
+build_rpm_in_chroot_no_install python-jinja2 python3-jinja
 copy_rpm_subpackage python3-jinja2
 
 # systemd-bootstrap requires libcap, xz, kbd, kmod, util-linux, meson, intltool, python3-jinja2
