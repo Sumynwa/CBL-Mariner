@@ -13853,16 +13853,6 @@
       "component": {
         "type": "other",
         "other": {
-          "name": "ORBit2",
-          "version": "2.14.19",
-          "downloadUrl": "https://download.gnome.org/sources/ORBit2/2.14/ORBit2-2.14.19.tar.gz"
-        }
-      }
-    },
-    {
-      "component": {
-        "type": "other",
-        "other": {
           "name": "OpenEXR",
           "version": "2.3.0",
           "downloadUrl": "https://github.com/openexr/openexr/releases/download/v2.3.0/OpenEXR-2.3.0.tar.gz"
@@ -14076,6 +14066,16 @@
           "name": "orangefs",
           "version": "2.9.8",
           "downloadUrl": "https://s3.amazonaws.com/download.orangefs.org/current/source/orangefs-2.9.8.tar.gz"
+        }
+      }
+    },
+    {
+      "component": {
+        "type": "other",
+        "other": {
+          "name": "ORBit2",
+          "version": "2.14.19",
+          "downloadUrl": "https://download.gnome.org/sources/ORBit2/2.14/ORBit2-2.14.19.tar.gz"
         }
       }
     },
