@@ -143,7 +143,7 @@ make check-TESTS
 
 %changelog
 * Wed Oct 26 2022 Sumedh Sharma <sumsharma@microsoft.com> - 2.14.19-30
-- Initial CBL-Mariner import from Fedora 37 (license:MIT).
+- Initial CBL-Mariner import from Fedora 37 (license: MIT).
 - Enable check section.
 - License verified.
 
