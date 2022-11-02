@@ -1,36 +1,28 @@
+Summary:        Active Directory enrollment
+Name:           adcli
+Version:        0.9.2
+Release:        2%{?dist}
+License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-Name:		adcli
-Version:	0.9.0
-Release:	2%{?dist}
-Summary:	Active Directory enrollment
-License:	LGPLv2+
-URL:		http://cgit.freedesktop.org/realmd/adcli
-Source0:	https://gitlab.freedesktop.org/realmd/adcli/uploads/02d8757266c24fdc10822306582287bf/adcli-%{version}.tar.gz
+URL:            https://gitlab.freedesktop.org/realmd/%{name}
+Source0:        %{url}/uploads/ea560656ac921b3fe0d455976aaae9be/%{name}-%{version}.tar.gz
 
-Patch1:		0001-man-move-note-to-the-right-section.patch
-Patch2:		0002-tools-add-show-computer-command.patch
-Patch3:		0003-add-description-option-to-join-and-update.patch
-Patch4:		0004-Use-GSS-SPNEGO-if-available.patch
-Patch5:		0005-add-option-use-ldaps.patch
-Patch6:		0006-discovery-fix.patch
-
-
-BuildRequires:	cyrus-sasl-devel
-BuildRequires:	gcc
-BuildRequires:	intltool pkgconfig
-BuildRequires:	libtool
-BuildRequires:	gettext-devel
-BuildRequires:	krb5-devel
-BuildRequires:	openldap-devel
-BuildRequires:	libxslt
-BuildRequires:	xmlto
-
-Requires:	cyrus-sasl-gssapi
-
+BuildRequires:  cyrus-sasl-devel
+BuildRequires:  gcc
+BuildRequires:  gettext-devel
+BuildRequires:  intltool
+BuildRequires:  krb5-devel
+BuildRequires:  libtool
+BuildRequires:  libxslt
+BuildRequires:  make
+BuildRequires:  openldap-devel
+BuildRequires:  xmlto
+Requires:       cyrus-sasl-gssapi
+Conflicts:      adcli-doc < %{version}-%{release}
 # adcli no longer has a library of development files
 # the adcli tool itself is to be used by callers
-Obsoletes:	adcli-devel < 0.5
+Obsoletes:      adcli-devel < 0.5
 
 %description
 adcli is a tool for joining an Active Directory domain using
@@ -43,15 +35,15 @@ standard LDAP and Kerberos calls.
 
 %build
 autoreconf --force --install --verbose
-%configure --disable-static --disable-silent-rules
-make %{?_smp_mflags}
+%configure --disable-static --disable-silent-rules %{nil}
+%make_build
 
 %check
-make check
+%make_build check
 
 %install
-make install DESTDIR=%{buildroot}
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%make_install
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %ldconfig_scriptlets
 
@@ -61,8 +53,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %doc %{_mandir}/*/*
 
 %package doc
-Summary: adcli documentation
-BuildArch: noarch
+Summary:        adcli documentation
+Conflicts:      adcli < %{version}-%{release}
+BuildArch:      noarch
 
 %description doc
 adcli is a tool for joining an Active Directory domain using
@@ -73,9 +66,70 @@ documentation.
 %doc %{_datadir}/doc/adcli/*
 
 %changelog
-* Thu Sep 23 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-2
-- Initial CBL-Mariner import from Fedora 32 (license: MIT).
-- Added missing BR on 'cyrus-sasl-devel'.
+* Wed Nov 02 2022 Sumedh Sharma <sumsharma@microsoft.com> - 0.9.2-2
+- Initial CBL-Mariner import from Fedora 38 (license: MIT)
+- Remove unsed configuration flags in build
+- Fix BR to add cyrus-sasl-devel
+- License verified
+
+* Thu Sep 29 2022 Sumit Bose <sbose@redhat.com> - 0.9.2-1
+- Update to upstream release 0.9.2
+
+* Wed Jul 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.1-11
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
+* Wed Jan 19 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.1-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
+* Wed Jul 28 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-9
+- Add ns_get16() and ns_get32() to configure check
+  Resolves: rhbz#1984891
+
+* Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.1-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
+* Mon Jun 28 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-7
+- Add user-passwd sub-command
+- Add setattr/delattr option
+
+* Thu Jun 03 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-6
+- Add fix for dont-expire-password option
+
+* Wed Jun 02 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-5
+- Add dont-expire-password option and coverity fixes
+
+* Wed Apr 07 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-4
+- Add macro updates for autoconf-2.71 and downstream gating
+
+* Mon Mar 29 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-3
+- Add vendor error message
+  Resolves: rhbz#1889386
+
+* Sat Feb 20 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-2
+- Add Conflicts to avoid update/downgrade issues
+
+* Sat Feb 20 2021 Sumit Bose <sbose@redhat.com> - 0.9.1-1
+- Update to upstream release 0.9.1
+
+* Mon Jan 25 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
+* Fri Nov 13 2020 Sumit Bose <sbose@redhat.com> - 0.9.0-6
+- Include the latest upstream patches with use-ldaps fixes, man page
+  improvements and a new sub-command to create managed service accounts
+
+* Thu Aug 13 2020 Sumit Bose <sbose@redhat.com> - 0.9.0-5
+- man page and help output fixes
+
+* Fri Jul 31 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-4
+- Second attempt - Rebuilt for
+  https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
+* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
+* Mon Jun 08 2020 Sumit Bose <sbose@redhat.com> - 0.9.0-2
+- Include the latest upstream patches
 
 * Wed Mar 18 2020 Sumit Bose <sbose@redhat.com> - 0.9.0-1
 - Update to upstream release 0.9.0 and latest patches
